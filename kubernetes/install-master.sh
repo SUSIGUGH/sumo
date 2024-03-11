@@ -1,6 +1,10 @@
 #!/bin/bash
 option="$1"
-if [ "$option" == "-o" ];
+if [ "$option" == "-u" ];
+then
+sudo yum remove -y kubelet kubeadm kubectl
+sudo yum remove docker -y
+elif [ "$option" == "-o" ];
 then
 sudo yum remove docker -y
 sudo yum install docker -y
