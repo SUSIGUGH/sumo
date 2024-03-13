@@ -15,4 +15,7 @@ module "ec2-kub-master"{
 source = "./master"
 }
 
+module "ec2-kub-worker"{
+source = "./worker"
+}
 

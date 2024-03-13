@@ -28,8 +28,9 @@ resource "aws_instance" "ec2-kub-master" {
      tail -2 /tmp/kubeadm-init.log > /tmp/kubeadmjoin.sh
      mkdir -p /root/.kube
      cp -i /etc/kubernetes/admin.conf /root/.kube/config
+     cd /root
      curl https://raw.githubusercontent.com/projectcalico/calico/v3.27.0/manifests/calico.yaml -O
-     kubectl apply -f calico.yaml
+     kubectl apply -f /root/calico.yaml
      EOF
 }
 
