@@ -18,6 +18,12 @@ pipeline{
                 sh 'cd sumo && scp -r terraform ec2-user@172.31.4.239:/home/ec2-user/'
             }
         }
+
+        stage("Copy Terraform Folder to Terraform EC2"){
+            steps{
+                sh 'ssh ec2-user@172.31.4.239 "cd terraform && terraform init"'
+            }
+        }
         
         
     }
