@@ -1,7 +1,6 @@
 pipeline{
     agent any
     
-    
     stages{
         
         stage("Data from Github"){
@@ -11,7 +10,6 @@ pipeline{
                 sh 'ls -ltr sumo'
             }
         }
-        
             
         stage("Copy Terraform Folder to Terraform EC2"){
             steps{
@@ -19,12 +17,10 @@ pipeline{
             }
         }
 
-        stage("Copy Terraform Folder to Terraform EC2"){
-            steps{
-                sh 'ssh ec2-user@172.31.4.239 "cd terraform && terraform init"'
-            }
-        }
-        
-        
+//        stage("Copy Terraform Folder to Terraform EC2"){
+//            steps{
+//                sh 'ssh ec2-user@172.31.4.239 "cd terraform && terraform init"'
+ //           }
+ //       }
     }
 }
