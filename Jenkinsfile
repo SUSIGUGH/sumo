@@ -6,7 +6,7 @@ pipeline{
         stage("Data from Github"){
             steps{
                 sh 'rm -Rf sumo'
-                sh 'git clone https:github.com/SUSIGUGH/sumo.git'
+                sh 'git clone https://github.com/SUSIGUGH/sumo.git'
                 sh 'ls -ltr sumo'
             }
         }
