@@ -13,5 +13,5 @@ type = string
 default = "us-east-2"
 description = "VPC for Kubernetes"
 }
-variable key_name{
+variable "key_name"{
 }
