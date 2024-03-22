@@ -1,3 +1,14 @@
+resource "tls_private_key" "pemkey" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "generated_key" {
+  key_name   = var.key_name
+  public_key = tls_private_key.pemkey.public_key_openssh
+}
+
+
 resource "aws_instance" "ec2-kub-master" {
   ami = var.ec2-kub-ami
   instance_type = "t2.micro"
@@ -31,6 +42,8 @@ resource "aws_instance" "ec2-kub-master" {
      cd /root
      curl https://raw.githubusercontent.com/projectcalico/calico/v3.27.0/manifests/calico.yaml -O
      kubectl apply -f /root/calico.yaml
+     ssh-keygen -q -t rsa -N '' -f ~/.ssh/id_rsa <<<y >/dev/null 2>&1
+     
      EOF
 }
 
