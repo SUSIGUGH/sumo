@@ -21,9 +21,15 @@ pipeline{
             steps{
                 sh 'ssh ec2-user@172.31.4.239 "cd terraform && terraform init && terraform apply -auto-approve"'
                 sh 'ssh ec2-user@172.31.4.239 "cd terraform && terraform output"'
-                sh 'ssh ec2-user@172.31.4.239 "cd terraform && terraform destroy -auto-approve"'
+                // sh 'ssh ec2-user@172.31.4.239 "cd terraform && terraform destroy -auto-approve"'
             }
         }
+
+	stage("Waiting for warm Up"){
+		steps{
+			sh 'sleep 120'
+		}
+	}	
 
         stage("Join Worker to Cluster"){
             steps{
