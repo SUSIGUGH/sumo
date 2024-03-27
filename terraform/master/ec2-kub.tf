@@ -15,9 +15,9 @@ resource "aws_instance" "ec2-kub-master" {
  tags = {
     Name = "master"
   }
-  subnet_id = "subnet-009968c59e9d66a3d"
-  vpc_security_group_ids = ["sg-0284357dedebf8167"]
-  key_name = "ads"
+ subnet_id = "subnet-0486e9321268a50ce"
+  vpc_security_group_ids = ["sg-07b890b2894917d1e"]
+  key_name = "nss-php"
   user_data = <<-EOF
      #!/bin/bash
      yum install docker -y
