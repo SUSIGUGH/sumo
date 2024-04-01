@@ -8,12 +8,15 @@ pipeline{
                 sh 'rm -Rf sumo'
                 sh 'git clone https://github.com/SUSIGUGH/sumo.git'
                 sh 'ls -ltr sumo'
+                sh 'chmod 600 sumo/linkedtoworld.pem'
             }
         }
             
         stage("Copy Terraform Folder to Terraform EC2"){
             steps{
                 sh 'cd sumo && scp -r terraform ec2-user@172.31.4.239:/home/ec2-user/'
+                sh 'chmod 600 sumo/linkedtoworld.pem'
+                sh 'cd sumo && scp -r linkedtoworld.pem ec2-user@172.31.4.239:/home/ec2-user/'
             }
         }
 
@@ -34,7 +37,8 @@ pipeline{
 
         stage("Join Worker to Cluster"){
             steps{
-                sh 'echo "Joining in Worker"'
+sh 'echo "In Worker"'
+                //sh 'ssh ec2-user@172.31.4.239 "'
             }
         }
 
