@@ -23,6 +23,7 @@ pipeline{
         stage("Execute Terraform"){
             steps{
                 sh 'ssh ec2-user@172.31.4.239 "cd terraform && terraform init && terraform apply -auto-approve"'
+                sh 'ssh ec2-user@172.31.4.239 "cd terraform && terraform output | grep masterpubip | cut -d"=" -f2 > /tmp/mstip.txt"'
                 sh 'ssh ec2-user@172.31.4.239 "cd terraform && terraform output | grep workerpubip01 | cut -d"=" -f2 > /tmp/wrkip.txt"'
                 sh 'ssh ec2-user@172.31.4.239 "cd terraform && terraform output | grep workerpubip02 | cut -d"=" -f2 >> /tmp/wrkip.txt "'
                 // sh 'ssh ec2-user@172.31.4.239 "cd terraform && terraform destroy -auto-approve"'
