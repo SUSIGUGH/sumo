@@ -39,11 +39,11 @@ pipeline{
         stage("Join Worker to Cluster"){
             steps{
               script {
-                def MASTERIP = sh(returnStdout: true, script: 'ssh ec2-user@172.31.4.239 "cat /tmp/mstip.txt"')
-                def WORKERIP1 = sh(returnStdout: true, script: 'ssh ec2-user@172.31.4.239 "cat /tmp/wrkip1.txt"')
+                def MASTERIP = sh(returnStdout: true, script: 'ssh ec2-user@172.31.4.239 "cat /tmp/mstip.txt | cut -d'"' -f2"')
+                def WORKERIP1 = sh(returnStdout: true, script: 'ssh ec2-user@172.31.4.239 "cat /tmp/wrkip1.txt | cut -d'"' -f2"')
                 echo "MASTER IP is ${MASTERIP}"
                 echo "WORKER IP 1 is ${WORKERIP1}"
-                sh 'cd sumo && scp -i linkedtoworld.pem -o StrictHostKeyChecking=no linkedtoworld.pem ec2-user@\${MASTERIP}:/home/ec2-user/'
+                sh 'cd sumo && scp -i linkedtoworld.pem -o StrictHostKeyChecking=no linkedtoworld.pem ec2-user@"\${MASTERIP}":/home/ec2-user/'
                 sh 'ssh -i sumo/linkedtoworld.pem -o StrictHostKeyChecking=no ec2-user@"\${MASTERIP}" "scp -i ~/linkedtoworld.pem -o StrictHostKeyChecking=no /tmp/kubeadmjoin.sh ec2-user@\${WORKERIP1}:/home/ec2-user/"'
                 sh 'ssh -i sumo/linkedtoworld.pem -o StrictHostKeyChecking=no ec2-user@\${WORKERIP1} "sudo sh ~/kubeadmjoin.sh"'
                 }
