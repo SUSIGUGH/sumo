@@ -38,14 +38,10 @@ pipeline{
         stage("Join Worker to Cluster"){
             steps{
 script {
-                env.MASTERIP1 = sh(returnStdout: true, script: 'ssh ec2-user@172.31.4.239 "tail -1 /tmp/mstip.txt"')
-                env.WORKERIP1 = sh(returnStdout: true, script: 'ssh ec2-user@172.31.4.239 "tail -1 /tmp/wrkip1.txt"')
-                echo "MASTER IP is ${env.MASTERIP1}"
-                echo "WORKER IP 1 is ${env.WORKERIP1}"
-                echo "${env.MASTERIP1}" | cut -d'"' -f2 > mip.txt
-                echo "${env.WORKERIP1}" | cut -d'"' -f2 > wip.txt
-                env.MASTERIP = sh(returnStdout: true, script: 'tail -1 mip.txt')
-                env.WORKERIP = sh(returnStdout: true, script: 'tail -1 wip.txt')
+                env.MASTERIP = sh(returnStdout: true, script: 'ssh ec2-user@172.31.4.239 "tail -1 /tmp/mstip.txt | cut -d'"' -f2"')
+                env.WORKERIP = sh(returnStdout: true, script: 'ssh ec2-user@172.31.4.239 "tail -1 /tmp/wrkip1.txt | cut -d'"' -f2"')
+                echo "MASTER IP is ${env.MASTERIP}"
+                echo "WORKER IP 1 is ${env.WORKERIP}"
 }
                 sh 'cd sumo && scp -i linkedtoworld.pem -o StrictHostKeyChecking=no linkedtoworld.pem ec2-user@${MASTERIP}:/home/ec2-user/'
                 sh 'ssh -i sumo/linkedtoworld.pem -o StrictHostKeyChecking=no ec2-user@${MASTERIP} "scp -i ~/linkedtoworld.pem -o StrictHostKeyChecking=no /tmp/kubeadmjoin.sh ec2-user@${WORKERIP}:/home/ec2-user/"'
