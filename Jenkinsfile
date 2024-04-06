@@ -29,11 +29,11 @@ pipeline{
             }
         }
 
-	//stage("Waiting for warm Up"){
-	//	steps{
-	//		sh 'sleep 120'
-	//	}
-	// }	
+	stage("Waiting for warm Up"){
+		steps{
+			sh 'sleep 120'
+		}
+	 }	
 
         stage("Join Worker to Cluster"){
             steps{
