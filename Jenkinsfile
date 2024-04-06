@@ -42,8 +42,8 @@ script {
                 env.WORKERIP1 = sh(returnStdout: true, script: 'ssh ec2-user@172.31.4.239 "tail -1 /tmp/wrkip1.txt"')
                 echo "MASTER IP is ${env.MASTERIP1}"
                 echo "WORKER IP 1 is ${env.WORKERIP1}"
-                echo $env.MASTERIP | cut -d'"' -f2 > mip.txt
-                echo $env.WORKERIP | cut -d'"' -f2 > wip.txt
+                echo ${env.MASTERIP} | cut -d'"' -f2 > mip.txt
+                echo ${env.WORKERIP} | cut -d'"' -f2 > wip.txt
                 env.MASTERIP = sh(returnStdout: true, script: 'tail -1 mip.txt')
                 env.WORKERIP = sh(returnStdout: true, script: 'tail -1 wip.txt')
 }
