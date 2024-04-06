@@ -30,11 +30,11 @@ pipeline{
             }
         }
 
-	stage("Waiting for warm Up"){
-		steps{
-			sh 'sleep 120'
-		}
-	}	
+	//stage("Waiting for warm Up"){
+	//	steps{
+	//		sh 'sleep 120'
+	//	}
+	// }	
 
         stage("Join Worker to Cluster"){
             steps{
@@ -43,6 +43,7 @@ pipeline{
                 def WORKERIP1 = sh(returnStdout: true, script: 'ssh ec2-user@172.31.4.239 "cat /tmp/wrkip1.txt"')
                 echo "MASTER IP is ${MASTERIP}"
                 echo "WORKER IP 1 is ${WORKERIP1}"
+                sh 'ssh -i sumo/linkedtoworld.pem -o StrictHostKeyChecking=no ec2-user@${MASTERIP} "scp -i ~/linkedtoworld.pem -o StrictHostKeyChecking=no /tmp/kubeadmjoin.sh ec2-user@${WORKERIP1}:/home/ec2-user/"'
                 }
 sh 'echo "In Worker"'
 
