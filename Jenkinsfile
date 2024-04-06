@@ -43,6 +43,8 @@ script {
                 echo "MASTER IP is ${env.MASTERIP}"
                 echo "WORKER IP 1 is ${env.WORKERIP}"
 }
+                sh 'mip=$(echo $MASTERIP | cut -d'"' -f2)'
+                sh 'echo $mip'
                 sh 'cd sumo && scp -i linkedtoworld.pem -o StrictHostKeyChecking=no linkedtoworld.pem ec2-user@${MASTERIP}:/home/ec2-user/'
                 sh 'ssh -i sumo/linkedtoworld.pem -o StrictHostKeyChecking=no ec2-user@${MASTERIP} "scp -i ~/linkedtoworld.pem -o StrictHostKeyChecking=no /tmp/kubeadmjoin.sh ec2-user@${WORKERIP}:/home/ec2-user/"'
                 sh 'ssh -i sumo/linkedtoworld.pem -o StrictHostKeyChecking=no ec2-user@${WORKERIP} "sudo sh ~/kubeadmjoin.sh"'
