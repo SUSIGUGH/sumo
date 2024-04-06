@@ -42,7 +42,7 @@ pipeline{
                 def MASTERIP = sh(returnStdout: true, script: 'ssh ec2-user@172.31.4.239 "cat /tmp/mstip.txt"')
                 def WORKERIP1 = sh(returnStdout: true, script: 'ssh ec2-user@172.31.4.239 "cat /tmp/wrkip1.txt"')
                 echo "MASTER IP is ${MASTERIP}"
-                echo "WORKER IP 1 is ${{WORKERIP1}"
+                echo "WORKER IP 1 is ${WORKERIP1}"
                 }
 sh 'echo "In Worker"'
 
