@@ -24,8 +24,8 @@ pipeline{
             steps{
                 sh 'ssh ec2-user@172.31.4.239 "cd terraform && terraform init && terraform apply -auto-approve"'
                 sh 'ssh ec2-user@172.31.4.239 "cd terraform && terraform output | grep masterpubip | cut -d"=" -f2 > /tmp/mstip.txt"'
-                sh 'ssh ec2-user@172.31.4.239 "cd terraform && terraform output | grep workerpubip01 | cut -d"=" -f2 > /tmp/wrkip.txt"'
-                sh 'ssh ec2-user@172.31.4.239 "cd terraform && terraform output | grep workerpubip02 | cut -d"=" -f2 >> /tmp/wrkip.txt "'
+                sh 'ssh ec2-user@172.31.4.239 "cd terraform && terraform output | grep workerpubip01 | cut -d"=" -f2 > /tmp/wrkip1.txt"'
+                sh 'ssh ec2-user@172.31.4.239 "cd terraform && terraform output | grep workerpubip02 | cut -d"=" -f2 >> /tmp/wrkip2.txt "'
                 // sh 'ssh ec2-user@172.31.4.239 "cd terraform && terraform destroy -auto-approve"'
             }
         }
@@ -38,7 +38,12 @@ pipeline{
 
         stage("Join Worker to Cluster"){
             steps{
+              script {
+                def MASTERIP = sh(returnStdout: true, script: 'ssh ec2-user@172.31.4.239 "cat /tmp/mstip.txt"')
+                echo "MASTER IP is ${MASTERIP}"
+                }
 sh 'echo "In Worker"'
+
                 //sh 'ssh ec2-user@172.31.4.239 "'
             }
         }
