@@ -44,8 +44,8 @@ pipeline{
                 echo "MASTER IP is ${MASTERIP}"
                 echo "WORKER IP 1 is ${WORKERIP1}"
                 sh 'cd sumo && scp -i linkedtoworld.pem -o StrictHostKeyChecking=no linkedtoworld.pem ec2-user@13.232.171.124:/home/ec2-user/'
-                sh 'ssh -i sumo/linkedtoworld.pem -o StrictHostKeyChecking=no ec2-user@13.232.171.124 "scp -i ~/linkedtoworld.pem -o StrictHostKeyChecking=no /tmp/kubeadmjoin.sh ec2-user@13.232.2.229:/home/ec2-user/"'
-                sh 'ssh -i sumo/linkedtoworld.pem -o StrictHostKeyChecking=no ec2-user@13.232.2.229 "sudo sh ~/kubeadmjoin.sh"'
+                sh 'ssh -i sumo/linkedtoworld.pem -o StrictHostKeyChecking=no ec2-user@"\${MASTERIP}" "scp -i ~/linkedtoworld.pem -o StrictHostKeyChecking=no /tmp/kubeadmjoin.sh ec2-user@\${WORKERIP1}:/home/ec2-user/"'
+                sh 'ssh -i sumo/linkedtoworld.pem -o StrictHostKeyChecking=no ec2-user@\${WORKERIP1} "sudo sh ~/kubeadmjoin.sh"'
                 }
 sh 'echo "In Worker"'
 
