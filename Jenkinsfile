@@ -46,7 +46,7 @@ pipeline{
                 }
 sh 'echo "In Worker"'
 
-                sh 'echo"Master IP is ${MASTERIP} "'
+                sh 'echo "Master IP is ${MASTERIP} "'
             }
         }
 
