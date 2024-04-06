@@ -38,8 +38,8 @@ pipeline{
         stage("Join Worker to Cluster"){
             steps{
 script {
-                env.MASTERIP = sh(returnStdout: true, script: 'ssh ec2-user@172.31.4.239 "tail -1 /tmp/mstip.txt | cut -d'"' -f2"')
-                env.WORKERIP = sh(returnStdout: true, script: 'ssh ec2-user@172.31.4.239 "tail -1 /tmp/wrkip1.txt | cut -d'"' -f2"')
+                env.MASTERIP = sh(returnStdout: true, script: 'ssh ec2-user@172.31.4.239 "tail -1 /tmp/mstip.txt | cut -d\'"\' -f2"')
+                env.WORKERIP = sh(returnStdout: true, script: 'ssh ec2-user@172.31.4.239 "tail -1 /tmp/wrkip1.txt | cut -d\'"\' -f2"')
                 echo "MASTER IP is ${env.MASTERIP}"
                 echo "WORKER IP 1 is ${env.WORKERIP}"
 }
